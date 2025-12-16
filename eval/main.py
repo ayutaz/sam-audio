@@ -144,7 +144,7 @@ if __name__ == "__main__":
         help="Where to cache downloaded datasets",
     )
     parser.add_argument(
-        "--checkpoint-path", "-p", type=str, default="facebook/sam-audio-1b"
+        "--checkpoint-path", "-p", type=str, default="facebook/sam-audio-large"
     )
     parser.add_argument("--batch-size", "-b", type=int, default=1, help="Batch size")
     parser.add_argument(

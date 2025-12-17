@@ -32,7 +32,7 @@ dependencies = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["sam_audio"]
+include = ["sam_audio*"]
 
 [tool.ruff]
 

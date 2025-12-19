@@ -13,21 +13,21 @@ authors = [
 
 readme = "README.md"
 license = { file="LICENSE" }
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = [
-    "dacvae@git+https://github.com/facebookresearch/dacvae.git",
+    "dacvae",
     "audiobox_aesthetics",
     "einops",
-    "imagebind@git+https://github.com/facebookresearch/ImageBind.git",
-    "laion-clap@git+https://github.com/lematt1991/CLAP.git",
+    "imagebind",
+    "laion-clap",
     "numpy",
-    "perception-models@git+https://github.com/facebookresearch/perception_models@unpin-deps",
+    "perception-models",
     "pydub",
-    "torch",
-    "torchaudio",
+    "torch>=2.5.0",
+    "torchaudio>=2.5.0",
     "torchcodec",
     "torchdiffeq",
-    "torchvision",
+    "torchvision>=0.20.0",
     "transformers>=4.54.0",
 ]
 
@@ -36,7 +36,7 @@ include = ["sam_audio*"]
 
 [tool.ruff]
 
-target-version = "py310"
+target-version = "py311"
 
 lint.select=[
     "B",
@@ -60,3 +60,23 @@ Repository = "https://github.com/facebookresearch/sam-audio"
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
+
+# ========== uv設定（CUDA 12.6対応） ==========
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
+
+[tool.uv.sources]
+# Git依存関係
+dacvae = { git = "https://github.com/facebookresearch/dacvae.git" }
+imagebind = { git = "https://github.com/facebookresearch/ImageBind.git" }
+laion-clap = { git = "https://github.com/lematt1991/CLAP.git" }
+perception-models = { git = "https://github.com/facebookresearch/perception_models.git", branch = "unpin-deps" }
+
+# PyTorchパッケージ（CUDA 12.6インデックスから取得）
+torch = { index = "pytorch-cu126" }
+torchvision = { index = "pytorch-cu126" }
+torchaudio = { index = "pytorch-cu126" }
+# torchcodecはWindows用CUDA wheelがないためPyPIから取得
